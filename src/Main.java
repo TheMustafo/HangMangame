@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) throws FileNotFoundException {
         List<String> wordsList = new ArrayList<>();
-        Scanner sc = new Scanner(new File("src/hangmanWordsList.txt"));
+        Scanner sc = new Scanner(new File("hangmanWordsList.txt"));
         Scanner keyboard = new Scanner(System.in);
         String word;
         System.out.println("1 or 2 players?");
