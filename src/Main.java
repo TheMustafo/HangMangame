@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) throws FileNotFoundException {
         List<String> wordsList = new ArrayList<>();
-        Scanner sc = new Scanner(new File("C:\\Users\\mrvth.MSI\\OneDrive\\Documents\\DEV\\hangmanWordsList.txt"));
+        Scanner sc = new Scanner(new File("src/hangmanWordsList.txt"));
         Scanner keyboard = new Scanner(System.in);
         String word;
         System.out.println("1 or 2 players?");
@@ -67,37 +67,53 @@ public class Main {
     private static void printHangman(int wrongCount) {
         System.out.println(" ------- ");
         System.out.println(" |     | ");
+
+        // Head
         if (wrongCount >= 1) {
             System.out.println(" O   ");
         }
+
+        // Arms
         if (wrongCount >= 2) {
-            System.out.print("\\");
+            System.out.print("\\"); // print (stay on line)
             if (wrongCount >= 3) {
-                System.out.println(" /");
+                System.out.println(" /"); // println (move to next line)
+            } else {
+                System.out.println(); // <- A small fix: If only 1 arm, move to next line anyway
             }
         } else {
-            System.out.println();
+            System.out.println(); // Empty line for body space
         }
+
+        // Body
         if (wrongCount >= 4) {
             System.out.println(" |   ");
         }
 
+        // Legs
         if (wrongCount >= 5) {
-            System.out.print("/");
+            System.out.print("/"); // print (stay on line)
             if (wrongCount >= 6) {
-                System.out.println(" \\");
+                System.out.println(" \\"); // println (move to next line)
+            } else {
+                System.out.println(); // <- A small fix: If only 1 leg, move to next line!
             }
         } else {
-            System.out.println();
+            System.out.println(); // Empty line for leg space
         }
     }
 
     private static boolean getPlayerGuess(Scanner keyboard, List<Character> playerGuesses, String word) {
         System.out.println("Please enter a letter: ");
         String letterGuess = keyboard.nextLine();
-        playerGuesses.add(letterGuess.charAt(0));
 
-        return (word.equals(letterGuess));
+        // Take the first character just in case they type a whole word
+        char guess = letterGuess.charAt(0);
+        playerGuesses.add(guess);
+
+        // Check if the word contains the character
+        // -1 means "not found", so anything else means "found"
+        return word.indexOf(guess) != -1;
     }
 
     private static boolean printWordState(String word, List<Character> playerGuesses) {
